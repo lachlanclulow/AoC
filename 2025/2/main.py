@@ -3,7 +3,8 @@ import pathlib
 
 def main():
     puzzle_input = open(
-        pathlib.Path(__file__).parent.resolve().joinpath("input.txt"), "r"
+        pathlib.Path(__file__).parent.resolve().joinpath("input.txt"),
+        "r"
     ).read()
 
     # I'd like to solve the puzzle
