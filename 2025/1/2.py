@@ -5,15 +5,21 @@ def main(puzzle_input: str):
     # I'd like to solve the puzzle
     answer = 50
     count = 0
+
     for line in puzzle_input.splitlines():
+        rots = 0
         if line[0] == "R":
+            rots = (answer + int(line[1:])) // 100
             answer = (answer + int(line[1:])) % 100
         else:
+            rots = abs((answer - int(line[1:])) // 100)
+            if answer == 0:
+                rots -= 1
             answer = (answer - int(line[1:])) % 100
-        
+            if answer == 0:
+                rots += 1
+        count += rots
 
-        if answer == 0:
-            count += 1
 
     return count
 
