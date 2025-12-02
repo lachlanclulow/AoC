@@ -8,12 +8,24 @@ def main(puzzle_input: str):
 
     for start, end in id_ranges:
         for x in range(int(start), int(end) + 1):
-            if len(str(x)) % 2 != 0:
-                continue
-            if str(x)[:len(str(x))//2] == str(x)[len(str(x))//2:]:
-                answer += x
-                #print(x)
+            s_x = str(x)
+            l = len(s_x)
 
+            for i in range(2, l+1):
+                invalid = True
+                if l % i != 0:
+                    continue
+            
+                chunk1 = s_x[:l//i]
+            
+                for chunk in range(1, i):
+                    if s_x[chunk*l//i:(chunk+1)*l//i] != chunk1:
+                        invalid = False
+                        break
+
+                if invalid:
+                    answer += x
+                    break
     return(answer)
 
 
