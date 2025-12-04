@@ -1,21 +1,28 @@
 import pathlib
 
+def reduce(nums, l=11):
+    if l<0:
+        return ""
+    if len(nums)-l == 1:
+        return nums
+    
+    biggest = nums[0]
+    pos = 0
+    for i in range(len(nums)-l):
+        if nums[i] > biggest:
+            biggest = nums[i]
+            pos = i
+
+    return biggest + reduce(nums[pos+1:], l-1)
+
+
 
 def main(puzzle_input: str):
     # I'd like to solve the puzzle
     answer = 0
 
     for line in puzzle_input.splitlines():
-        first = line[0]
-        second = line[1]
-        for i, c in enumerate(line[1:], 1):
-            if c > first and i <= len(line)-2:
-                first = c
-                second = line[i+1]
-            elif c > second:
-                second = c        
-        answer += int(first + second)
-
+        answer += int(reduce(line))
     return(answer)
 
 
