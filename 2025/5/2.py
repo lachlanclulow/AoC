@@ -1,5 +1,17 @@
 import pathlib
 
+def search(target, ranges):
+    print(f"{target=} {ranges[len(ranges)//2]}")
+    if len(ranges) == 1:
+        print(f"{target=} {ranges[0]} {ranges[0][0] <= target <= ranges[0][1]}")
+        return ranges[0][0] <= target <= ranges[0][1]
+    if target < ranges[len(ranges)//2][0]:
+        return search(target, ranges[:len(ranges)//2])
+    if target >= ranges[len(ranges)//2][0]:
+        return search(target, ranges[len(ranges)//2:])
+    return False
+
+
 def main(puzzle_input: str):
     # I'd like to solve the puzzle
     answer = 0
@@ -10,6 +22,7 @@ def main(puzzle_input: str):
     ingredients = sorted([int(x) for x in parts[1].splitlines()])
 
     compressed_ranges = [fresh_ranges[0]]
+    #print(fresh_ranges)
 
     for start, end in fresh_ranges[1:]:
         if start <= compressed_ranges[-1][1]:
@@ -17,11 +30,10 @@ def main(puzzle_input: str):
         else:
             compressed_ranges.append((start, end))
     
-    for ingredient in ingredients:
-        for range in compressed_ranges:
-            if range[0] <= ingredient <= range[1]:
-                answer += 1
-                break
+    #print(compressed_ranges)
+
+    for start, end in compressed_ranges:
+        answer += end-start+1
 
     return(answer)
 
