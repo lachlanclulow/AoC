@@ -19,18 +19,13 @@ def main(puzzle_input: str):
     parts = puzzle_input.split("\n\n")
 
     fresh_ranges = sorted([tuple([int(y) for y in x.split("-")]) for x in parts[0].splitlines()], key=lambda x: x[0])
-    ingredients = sorted([int(x) for x in parts[1].splitlines()])
-
     compressed_ranges = [fresh_ranges[0]]
-    #print(fresh_ranges)
 
     for start, end in fresh_ranges[1:]:
         if start <= compressed_ranges[-1][1]:
             compressed_ranges[-1] = (compressed_ranges[-1][0], max(end, compressed_ranges[-1][1]))
         else:
             compressed_ranges.append((start, end))
-    
-    #print(compressed_ranges)
 
     for start, end in compressed_ranges:
         answer += end-start+1
