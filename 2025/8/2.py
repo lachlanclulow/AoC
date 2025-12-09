@@ -24,24 +24,19 @@ def main(puzzle_input: str):
                 compared.add((k1, k2))
                 compared.add((k2, k1))
 
-    for d, n1, n2 in [heapq.heappop(distances) for _ in range(1000)]:
+    while len(distances) > 0:
+        d, n1, n2 = heapq.heappop(distances)
         if n2 not in circuits[n1]:
             new_circuit = circuits[n1] | circuits[n2]
             for c in circuits[n1] | circuits[n2]:
                 new_circuit |= circuits[c]
+            if len(new_circuit) == len(circuits):
+                return n1[0] * n2[0]
             circuits[n1] = new_circuit
             circuits[n2] = new_circuit
             for c in new_circuit:
                 circuits[c] = new_circuit
 
-    largest = sorted([x for x in set([tuple(v) for k, v in circuits.items()])], key=lambda i: len(i), reverse=True)[:3]
-
-    answer = 1
-
-    for x in largest:
-        answer *= len(x)
-    
-    return(answer)
 
 
 if __name__ == "__main__":
