@@ -1,4 +1,6 @@
 import pathlib
+from shapely.geometry import Point
+from shapely.geometry.polygon import Polygon
 
 
 def main(puzzle_input: str):
@@ -8,13 +10,18 @@ def main(puzzle_input: str):
     coords = []
 
     for row in puzzle_input.splitlines():
-        coords.append(tuple([int(x) for x in row.split(",")]))
+        x, y = tuple([int(x) for x in row.split(",")])
+
+        coords.append((x, y))
+    
+    poly = Polygon(coords)
+
 
     for x1, y1 in coords:
         for x2, y2 in coords:
             if x1 != x2 and y1 != y2:
                 area = (abs(x2 - x1) + 1) * (abs(y2 - y1) + 1)
-                if area > answer:
+                if area > answer and poly.contains(Polygon([(x1, y1), (x1, y2), (x2, y2), (x2, y1)])):
                     answer = area
 
     return(answer)
