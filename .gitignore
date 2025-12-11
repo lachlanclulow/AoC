@@ -1,9 +1,10 @@
-**/*.puzz
-**/bin
-**/include
-**/lib
-**/share
-**/pyvenv.cfg
 
-*.puzz
+bin
+include
+lib
+share
+
+**.cfg
+
 **/*.txt
+**/*.puzz
