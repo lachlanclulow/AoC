@@ -15,7 +15,7 @@ def gauss_elim(buttons, joltages) -> int:
             mat,
             np.array(joltages),
             np.array(joltages)),
-        bounds=Bounds(lb=0, ub=np.inf),
+        bounds=Bounds(lb=0, ub=max(joltages)),
         integrality=np.ones(len(buttons))
     )
     
